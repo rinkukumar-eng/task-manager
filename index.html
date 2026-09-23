@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description"
+        content="LifeDesk - Student Productivity and Time Management Platform">
+
+  <title>LifeDesk — Student Productivity</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="toast" class="toast"></div>
+
+  <div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+        <div class="brand-mark">L</div>
+
+        <div>
+          <strong>LifeDesk</strong>
+          <span>Plan • Study • Achieve</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+
+        <button class="nav-item active" data-page="dashboard">
+          <span>⌂</span> Dashboard
+        </button>
+
+        <button class="nav-item" data-page="timetable">
+          <span>◷</span> Timetable
+        </button>
+
+        <button class="nav-item" data-page="tasks">
+          <span>✓</span> Tasks
+        </button>
+
+        <button class="nav-item" data-page="timer">
+          <span>◉</span> Time Tracker
+        </button>
+
+        <button class="nav-item" data-page="goals">
+          <span>◎</span> Goals
+        </button>
+
+        <button class="nav-item" data-page="expenses">
+          <span>₹</span> Expenses
+        </button>
+
+        <button class="nav-item" data-page="notes">
+          <span>▤</span> Notes
+        </button>
+
+        <button class="nav-item" data-page="analytics">
+          <span>⌁</span> Analytics
+        </button>
+
+        <button class="nav-item" data-page="assistant">
+          <span>✦</span> Smart Assistant
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+
+        <button class="nav-item" data-page="settings">
+          <span>⚙</span> Settings
+        </button>
+
+        <div class="user-mini">
+
+          <div class="avatar">RK</div>
+
+          <div>
+            <strong id="sidebarName">Rinku Kumar</strong>
+            <small>Student</small>
+          </div>
+
+          <button id="logoutBtn" title="Log out">↪</button>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+
+        <div class="search-box">
+
+          <span>⌕</span>
+
+          <input
+            id="globalSearch"
+            type="search"
+            placeholder="Search anything..."
+          >
+
+        </div>
+
+        <div class="top-actions">
+
+          <button class="icon-btn" id="themeBtn">
+            ☾
+          </button>
+
+          <button class="icon-btn" id="notifyBtn">
+            ♧
+            <i></i>
+          </button>
+
+          <div class="profile-chip" id="profileChip">
+
+            <div class="avatar">RK</div>
+
+            <span id="topName">Rinku</span>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- DASHBOARD -->
+      <section id="page-dashboard" class="page active-page">
+
+        <div class="page-head">
+
+          <div>
+
+            <p class="eyebrow" id="todayLabel"></p>
+
+            <h1>
+              Good morning,
+              <span id="helloName">Rinku</span> 👋
+            </h1>
+
+            <p class="muted">
+              Small steps every day lead to big results.
+            </p>
+
+          </div>
+
+          <button class="primary" data-open-modal="taskModal">
+            ＋ Add Task
+          </button>
+
+        </div>
+
+
+        <!-- STAT CARDS -->
+        <div class="stats-grid">
+
+          <div class="stat-card">
+
+            <div class="stat-icon blue">◷</div>
+
+            <div>
+              <span>Study Time</span>
+              <strong id="studyStat">0h 00m</strong>
+              <small id="studyTrend">This week</small>
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-icon green">✓</div>
+
+            <div>
+              <span>Tasks Completed</span>
+              <strong id="taskStat">0/0</strong>
+              <small>Keep going</small>
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-icon purple">◎</div>
+
+            <div>
+              <span>Goals Progress</span>
+              <strong id="goalStat">0%</strong>
+              <small>Across active goals</small>
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-icon orange">₹</div>
+
+            <div>
+              <span>Today's Expenses</span>
+              <strong id="expenseStat">₹0</strong>
+              <small id="budgetTrend">Budget tracking</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- DASHBOARD GRID -->
+        <div class="dashboard-grid">
+
+          <div class="card schedule-card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Today's Schedule</h2>
+                <p class="muted">Your planned day</p>
+              </div>
+
+              <button
+                class="text-btn"
+                data-page-link="timetable">
+                View Full Timetable →
+              </button>
+
+            </div>
+
+            <div id="todaySchedule" class="schedule-list"></div>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Quick Actions</h2>
+                <p class="muted">Stay productive</p>
+              </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+              <button
+                class="quick purple"
+                data-open-modal="taskModal">
+
+                <b>＋</b>
+                <span>Add Task</span>
+
+              </button>
+
+
+              <button
+                class="quick orange"
+                data-open-modal="expenseModal">
+
+                <b>₹</b>
+                <span>Add Expense</span>
+
+              </button>
+
+
+              <button
+                class="quick violet"
+                data-page-link="timer">
+
+                <b>◉</b>
+                <span>Start Timer</span>
+
+              </button>
+
+
+              <button
+                class="quick blue"
+                data-open-modal="noteModal">
+
+                <b>▤</b>
+                <span>Add Note</span>
+
+              </button>
+
+            </div>
+
+
+            <div class="quote-box">
+              “Discipline builds the freedom you want tomorrow.”
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- BOTTOM GRID -->
+        <div class="bottom-grid">
+
+          <div class="card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Weekly Study Time</h2>
+                <p class="muted">Planned vs actual</p>
+              </div>
+
+            </div>
+
+            <div class="bar-chart" id="studyChart"></div>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Upcoming Tasks</h2>
+                <p class="muted">Don't miss your deadlines</p>
+              </div>
+
+              <button
+                class="text-btn"
+                data-page-link="tasks">
+                See all →
+              </button>
+
+            </div>
+
+            <div id="upcomingTasks"></div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TIMETABLE -->
+      <section id="page-timetable" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">SCHEDULE</p>
+            <h1>Timetable</h1>
+            <p class="muted">
+              Plan your week and compare it with your actual time.
+            </p>
+          </div>
+
+          <button
+            class="primary"
+            data-open-modal="scheduleModal">
+            ＋ Add Schedule
+          </button>
+
+        </div>
+
+        <div class="week-tabs" id="dayTabs"></div>
+
+        <div class="card">
+
+          <div class="timeline" id="fullSchedule"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TASKS -->
+      <section id="page-tasks" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">PRODUCTIVITY</p>
+            <h1>Tasks</h1>
+            <p class="muted">
+              Turn plans into completed work.
+            </p>
+          </div>
+
+          <button
+            class="primary"
+            data-open-modal="taskModal">
+            ＋ Add Task
+          </button>
+
+        </div>
+
+
+        <div class="filter-row">
+
+          <button class="filter active" data-filter="all">
+            All
+          </button>
+
+          <button class="filter" data-filter="pending">
+            Pending
+          </button>
+
+          <button class="filter" data-filter="progress">
+            In Progress
+          </button>
+
+          <button class="filter" data-filter="completed">
+            Completed
+          </button>
+
+        </div>
+
+
+        <div class="card table-card">
+
+          <div id="taskTable"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TIMER -->
+      <section id="page-timer" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">TIME MANAGEMENT</p>
+            <h1>Time Tracker</h1>
+            <p class="muted">
+              Track where your time actually goes.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="timer-grid">
+
+          <div class="card timer-main">
+
+            <span class="label">
+              WHAT ARE YOU DOING?
+            </span>
+
+            <select id="timerSubject">
+
+              <option>Study</option>
+              <option>Mathematics</option>
+              <option>JavaScript</option>
+              <option>Reading</option>
+              <option>Assignment</option>
+              <option>Exercise</option>
+
+            </select>
+
+
+            <div class="timer-ring">
+
+              <span id="timerDisplay">
+                00:00:00
+              </span>
+
+              <small>Today</small>
+
+            </div>
+
+
+            <button
+              class="timer-btn"
+              id="timerBtn">
+              Start Timer
+            </button>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Today's Logs</h2>
+                <p class="muted">
+                  Your recorded sessions
+                </p>
+              </div>
+
+            </div>
+
+            <div id="timerLogs"></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-head">
+
+            <div>
+              <h2>This Week</h2>
+              <p class="muted">
+                Actual study hours
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            class="bar-chart large"
+            id="timerChart">
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- GOALS -->
+      <section id="page-goals" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">LONG TERM</p>
+            <h1>Goals</h1>
+            <p class="muted">
+              Build progress one milestone at a time.
+            </p>
+          </div>
+
+          <button
+            class="primary"
+            data-open-modal="goalModal">
+            ＋ Add Goal
+          </button>
+
+        </div>
+
+        <div
+          class="goal-grid"
+          id="goalGrid">
+        </div>
+
+      </section>
+
+
+      <!-- EXPENSES -->
+      <section id="page-expenses" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">MONEY</p>
+            <h1>Expense Tracker</h1>
+            <p class="muted">
+              Understand your spending and stay within budget.
+            </p>
+          </div>
+
+          <button
+            class="primary"
+            data-open-modal="expenseModal">
+            ＋ Add Expense
+          </button>
+
+        </div>
+
+
+        <div class="expense-grid">
+
+          <div class="card budget-card">
+
+            <h2>Monthly Budget</h2>
+
+            <div class="budget-amount">
+
+              <strong id="monthSpent">
+                ₹0
+              </strong>
+
+              <span>/ ₹8,000</span>
+
+            </div>
+
+
+            <div class="progress">
+
+              <i id="budgetProgress"></i>
+
+            </div>
+
+
+            <div class="between">
+
+              <span id="budgetPercent">
+                0% used
+              </span>
+
+              <span id="budgetRemaining">
+                ₹8,000 remaining
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Category Breakdown</h2>
+                <p class="muted">This month</p>
+              </div>
+
+            </div>
+
+            <div
+              id="expenseBreakdown"
+              class="breakdown">
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="card table-card">
+
+          <div class="card-head">
+
+            <div>
+              <h2>Recent Expenses</h2>
+              <p class="muted">
+                Latest entries
+              </p>
+            </div>
+
+          </div>
+
+          <div id="expenseTable"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- NOTES -->
+      <section id="page-notes" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">KNOWLEDGE</p>
+            <h1>Notes</h1>
+            <p class="muted">
+              Keep important ideas in one place.
+            </p>
+          </div>
+
+          <button
+            class="primary"
+            data-open-modal="noteModal">
+            ＋ Add Note
+          </button>
+
+        </div>
+
+
+        <div
+          class="notes-grid"
+          id="notesGrid">
+        </div>
+
+      </section>
+
+
+      <!-- ANALYTICS -->
+      <section id="page-analytics" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">INSIGHTS</p>
+            <h1>Analytics</h1>
+            <p class="muted">
+              See the difference between what you planned and what you did.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="analytics-grid">
+
+          <div class="card">
+
+            <h2>Planned vs Actual</h2>
+
+            <div
+              class="compare-list"
+              id="compareList">
+            </div>
+
+          </div>
+
+
+          <div class="card">
+
+            <h2>Productivity Summary</h2>
+
+            <div
+              class="summary-stats"
+              id="summaryStats">
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-head">
+
+            <div>
+              <h2>Weekly Activity</h2>
+              <p class="muted">
+                Your study sessions
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            class="bar-chart large"
+            id="analyticsChart">
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- SMART ASSISTANT -->
+      <section id="page-assistant" class="page">
+
+        <div class="page-head">
+
+          <div>
+            <p class="eyebrow">SMART PLANNING</p>
+            <h1>Smart Assistant</h1>
+
+            <p class="muted">
+              Get a practical study plan from your available time.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="assistant-grid">
+
+          <div class="card assistant-card">
+
+            <div class="bot">✦</div>
+
+            <h2>
+              Hi <span id="assistantName">Rinku</span>!
+            </h2>
+
+            <p class="muted">
+              Tell me how much time you have today and
+              I'll create a simple plan using your pending tasks.
+            </p>
+
+
+            <label>
+
+              Available time (hours)
+
+              <input
+                type="number"
+                id="availableHours"
+                min="1"
+                max="12"
+                value="3">
+
+            </label>
+
+
+            <button
+              class="primary full"
+              id="generatePlan">
+              Generate Today's Plan
+            </button>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-head">
+
+              <div>
+                <h2>Today's Plan</h2>
+
+                <p class="muted">
+                  Generated from your tasks
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="smartPlan"
+              class="smart-plan">
+
+              <div class="empty">
+                Generate a plan to get started.
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- SETTINGS -->
+      <section id="page-settings" class="page">
+
+        <div class="page-head">
+
+          <div>
+
+            <p class="eyebrow">ACCOUNT</p>
+
+            <h1>Settings</h1>
+
+            <p class="muted">
+              Personalize your LifeDesk experience.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="card settings-card">
+
+          <label>
+
+            Display name
+
+            <input
+              id="settingsName"
+              type="text"
+              value="Rinku Kumar">
+
+          </label>
+
+
+          <label>
+
+            Monthly budget
+
+            <input
+              id="settingsBudget"
+              type="number"
+              value="8000">
+
+          </label>
+
+
+          <label>
+
+            Theme
+
+            <select id="settingsTheme">
+
+              <option value="dark">
+                Dark
+              </option>
+
+              <option value="light">
+                Light
+              </option>
+
+            </select>
+
+          </label>
+
+
+          <button
+            class="primary"
+            id="saveSettings">
+            Save Settings
+          </button>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- TASK MODAL -->
+  <div class="modal" id="taskModal">
+
+    <div class="modal-box">
+
+      <button class="close">×</button>
+
+      <h2>Add Task</h2>
+
+      <form id="taskForm">
+
+        <input
+          name="title"
+          placeholder="Task name"
+          required>
+
+        <input
+          name="subject"
+          placeholder="Subject / category"
+          required>
+
+        <select name="priority">
+
+          <option>High</option>
+          <option selected>Medium</option>
+          <option>Low</option>
+
+        </select>
+
+        <input
+          name="due"
+          type="date"
+          required>
+
+        <input
+          name="estimated"
+          type="number"
+          min="0.5"
+          step="0.5"
+          placeholder="Estimated hours"
+          required>
+
+        <button class="primary full">
+          Add Task
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- SCHEDULE MODAL -->
+  <div class="modal" id="scheduleModal">
+
+    <div class="modal-box">
+
+      <button class="close">×</button>
+
+      <h2>Add Schedule</h2>
+
+      <form id="scheduleForm">
+
+        <select name="day">
+
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+          <option>Sunday</option>
+
+        </select>
+
+        <input
+          name="start"
+          type="time"
+          required>
+
+        <input
+          name="end"
+          type="time"
+          required>
+
+        <input
+          name="title"
+          placeholder="Activity / subject"
+          required>
+
+        <select name="type">
+
+          <option>Study</option>
+          <option>Class</option>
+          <option>Break</option>
+          <option>Exercise</option>
+          <option>Personal</option>
+
+        </select>
+
+        <button class="primary full">
+          Add Schedule
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- GOAL MODAL -->
+  <div class="modal" id="goalModal">
+
+    <div class="modal-box">
+
+      <button class="close">×</button>
+
+      <h2>Add Goal</h2>
+
+      <form id="goalForm">
+
+        <input
+          name="title"
+          placeholder="Goal title"
+          required>
+
+        <input
+          name="target"
+          placeholder="Target / milestone"
+          required>
+
+        <input
+          name="progress"
+          type="number"
+          min="0"
+          max="100"
+          value="0"
+          placeholder="Progress %">
+
+        <input
+          name="date"
+          type="date">
+
+        <button class="primary full">
+          Add Goal
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- EXPENSE MODAL -->
+  <div class="modal" id="expenseModal">
+
+    <div class="modal-box">
+
+      <button class="close">×</button>
+
+      <h2>Add Expense</h2>
+
+      <form id="expenseForm">
+
+        <select name="category">
+
+          <option>Food</option>
+          <option>Transport</option>
+          <option>Education</option>
+          <option>Entertainment</option>
+          <option>Other</option>
+
+        </select>
+
+        <input
+          name="amount"
+          type="number"
+          min="1"
+          placeholder="Amount (₹)"
+          required>
+
+        <input
+          name="date"
+          type="date"
+          required>
+
+        <input
+          name="description"
+          placeholder="Description">
+
+        <button class="primary full">
+          Add Expense
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOTE MODAL -->
+  <div class="modal" id="noteModal">
+
+    <div class="modal-box">
+
+      <button class="close">×</button>
+
+      <h2>Add Note</h2>
+
+      <form id="noteForm">
+
+        <input
+          name="title"
+          placeholder="Note title"
+          required>
+
+        <input
+          name="tag"
+          placeholder="Tag e.g. Study">
+
+        <textarea
+          name="content"
+          placeholder="Write your note..."
+          required></textarea>
+
+        <button class="primary full">
+          Save Note
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
